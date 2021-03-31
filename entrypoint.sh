@@ -11,11 +11,13 @@ set -ex
 # display docker version
 /usr/local/bin/docker version
 
+# build args
+build_args=`echo $PLUGIN_ | tr ',' ' '`
 # docker build image
 array=`echo $PLUGIN_TAGS | tr ',' ' '`
 for tag in $array;
 do
-    /usr/local/bin/docker build -t $PLUGIN_REPO:$tag .
+    /usr/local/bin/docker build -t $PLUGIN_REPO:$tag --rm=true --pull=true -f ${PLUGIN_DOCKERFILE:-} .
 done
 
 # login docker 
